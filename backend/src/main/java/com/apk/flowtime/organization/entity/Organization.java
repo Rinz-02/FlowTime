@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "organzations")
+@Table(name = "organizations")
 @Getter
 @AllArgsConstructor
 public class Organization extends BaseEntity 
