@@ -1,10 +1,10 @@
-package com.apk.demo;
+package com.apk.flowtime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendApplicationTests {
+class FlowTimeApplicationTests {
 
 	@Test
 	void contextLoads() {
