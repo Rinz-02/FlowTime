@@ -1,5 +1,12 @@
 package com.apk.flowtime.organziation.repository;
 
-public class OrganizationRepository {
+import com.apk.flowtime.organization.entity.*;
+import java.util.UUID;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrganizationRepository 
+	extends JpaRepository<Organization, UUID>
+{
+	
 }
