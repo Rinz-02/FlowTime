@@ -1,5 +1,5 @@
 
-package com.apk.flowtime.organization.repository;
+package com.apk.flowtime.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
