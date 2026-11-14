@@ -15,8 +15,8 @@ import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabas
 import org.springframework.context.annotation.Import;
 
 import com.apk.flowtime.config.JpaConfig;
-import com.apk.flowtime.organization.entity.Organization;
-import com.apk.flowtime.organziation.repository.OrganizationRepository;
+import com.apk.flowtime.entity.Organization;
+import com.apk.flowtime.repository.OrganizationRepository;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(
