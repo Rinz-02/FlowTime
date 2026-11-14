@@ -7,13 +7,11 @@ import java.time.Instant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Entity
 @Table(name = "users")
 @Getter
-@AllArgsConstructor
 public class User extends BaseEntity
 {
 	@Column(name = "email", nullable = false)
@@ -38,6 +36,19 @@ public class User extends BaseEntity
 	protected User()
 	{
 		
+	}
+	
+	public User(
+			String email,
+			String passwordHash,
+			String firstName,
+			String lastName
+			)
+	{
+		this.email = email;
+		this.passwordHash = passwordHash;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 	
 	public void updateEmail(String email)
