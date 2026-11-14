@@ -1,6 +1,6 @@
-package com.apk.flowtime.organziation.repository;
+package com.apk.flowtime.repository;
 
-import com.apk.flowtime.organization.entity.*;
+import com.apk.flowtime.entity.Organization;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
