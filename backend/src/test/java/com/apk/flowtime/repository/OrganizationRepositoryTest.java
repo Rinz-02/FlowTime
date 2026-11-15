@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
 
 import com.apk.flowtime.config.JpaConfig;
 import com.apk.flowtime.entity.Organization;
-import com.apk.flowtime.repository.OrganizationRepository;
+
 
 @DataJpaTest
 @AutoConfigureTestDatabase(
@@ -30,7 +30,7 @@ class OrganizationRepositoryTest {
 
     @Autowired
     private EntityManager entityManager;
-
+    
     @Test
     void shouldGenerateUuidAndAuditTimestamps() throws InterruptedException {
 
