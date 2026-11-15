@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.DataIntegrityViolationException;
 import jakarta.persistence.EntityManager;
 
 import com.apk.flowtime.config.JpaConfig;
@@ -115,6 +116,8 @@ public class MembershipRepositoryTest
 	@DisplayName(value = "Find By organizationId and userId")
 	void shouldFindByMembershipByOrganizationIdAndUserId() 
 	{
+		entityManager.clear();
+		
 		var result = membershipRepository
 				.findByOrganization_IdAndUser_Id(
 						organizationA.getId(), 
@@ -198,5 +201,95 @@ public class MembershipRepositoryTest
 					)
 			);
 	}
+	
+	//Testing if The DataBase Model would reject duplicate memberships
+	@Test
+	@DisplayName(value = "Reject duplicate membership for smae user in same organization")
+	void shouldRejectDuplicateMembership()
+	{
+		Membership duplicateMembership = new Membership(
+				organizationA,
+				userA,
+				memberRole
+			);
+		
+		assertThrows(
+				DataIntegrityViolationException.class,
+				() -> membershipRepository.saveAndFlush(duplicateMembership)
+			);
+	}
+	
+	//Testing if The DataBase Model would reject membership with invalid Organization
+	@Test
+	@DisplayName(value = "Reject membership with nonexistence Organizaion")
+	void shouldRejectMembershipWithNonexistenceOrganization()
+	{
+		UUID nonExistenceOrganizationId = UUID.randomUUID();
+		
+		Organization nonExistenceOrganization = entityManager.getReference(
+				Organization.class,
+				nonExistenceOrganizationId
+			);
+				
+		Membership invalidMembership = new Membership(
+				nonExistenceOrganization,
+				userA,
+				memberRole
+			);
+		
+		assertThrows(
+				DataIntegrityViolationException.class,
+				() -> membershipRepository.saveAndFlush(invalidMembership)
+			);
+	}
+	
+	//Testing if The DataBase Model would reject membership with invalid User
+	@DisplayName(value = "Reject membership with nonexistence User")
+	void shouldRejectMembershipWithNonexistenceUser()
+	{
+		UUID nonExistenceUserId = UUID.randomUUID();
+		
+		User nonExistenceUser = entityManager.getReference(
+				User.class,
+				nonExistenceUserId
+			);
+		
+		Membership invalidMembership = new Membership(
+				organizationA,
+				nonExistenceUser,
+				memberRole
+			);
+		
+		assertThrows(
+				DataIntegrityViolationException.class,
+				() -> membershipRepository.saveAndFlush(invalidMembership)
+			);
+	}
+	
+	//Testing if The DataBase Model would membership with invalid Role
+	@Test
+	@DisplayName(value = "Reject membership with noneistence Role")
+	void shouldRejectMembershipNonexistenceRole()
+	{
+		UUID nonExistenceRoleId = UUID.randomUUID();
+		
+		Role nonExistenceRole = entityManager.getReference(
+				Role.class,
+				nonExistenceRoleId
+			);
+		
+		Membership invalidMembership = new Membership(
+				organizationA,
+				userA,
+				nonExistenceRole
+			);
+		
+		assertThrows(
+				DataIntegrityViolationException.class,
+				() -> membershipRepository.saveAndFlush(invalidMembership)
+			);
+	}
+	
+	
 	
 }
